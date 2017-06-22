@@ -737,6 +737,14 @@ uninstall:
 	rm -f $(MODDESTDIR)/$(MODULE_NAME).ko
 	/sbin/depmod -a ${KVER}
 
+dkms: clean
+	rm -rf /usr/src/$(MODULE_NAME)-4.0.5
+	mkdir /usr/src/$(MODULE_NAME)-4.0.5 -p
+	cp . /usr/src/$(MODULE_NAME)-4.0.5 -a
+	rm -rf /usr/src/$(MODULE_NAME)-4.0.5/.git
+	dkms add -m $(MODULE_NAME) -v 4.0.5
+	dkms build -m $(MODULE_NAME) -v 4.0.5
+	dkms install -m $(MODULE_NAME) -v 4.0.5 --force
 
 config_r:
 	@echo "make config"
